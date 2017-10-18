@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"82821f5b18","applicationID":"7165736","transactionName":"dlgMTUIKDQ4EFBsUX1lCDE1VABMLDwFrDUJSVgxQQwQVCw4IR01DXVgV","queueTime":0,"applicationTime":52,"agent":""}</script>
+    <script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o||n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({1:[function(e,n,t){function r(){}function o(e,n,t){return function(){return i(e,[c.now()].concat(u(arguments)),n?null:this,t),n?void 0:this}}var i=e("handle"),a=e(2),u=e(3),f=e("ee").get("tracer"),c=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,n){s[n]=o(d+n,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,o="function"==typeof n;return i(l+"tracer",[c.now(),e,t],r),function(){if(f.emit((o?"":"no-")+"fn-start",[c.now(),r,o],t),o)try{return n.apply(this,arguments)}finally{f.emit("fn-end",[c.now()],t)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=o(l+n)}),newrelic.noticeError=function(e){"string"==typeof e&&(e=new Error(e)),i("err",[e,c.now()])}},{}],2:[function(e,n,t){function r(e,n){var t=[],r="",i=0;for(r in e)o.call(e,r)&&(t[i]=n(r,e[r]),i+=1);return t}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],3:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(o<0?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=r},{}],4:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function o(e){function n(e){return e&&e instanceof r?e:e?f(e,u,i):i()}function t(t,r,o,i){if(!d.aborted||i){e&&e(t,r,o);for(var a=n(o),u=m(t),f=u.length,c=0;c<f;c++)u[c].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function l(e,n){v[e]=m(e).concat(n)}function m(e){return v[e]||[]}function w(e){return p[e]=p[e]||o(t)}function g(e,n){c(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var v={},y={},b={on:l,emit:t,get:w,listeners:m,context:n,buffer:g,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",f=e("gos"),c=e(2),s={},p={},d=n.exports=o();d.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(o.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){o.buffer([e],r),o.emit(e,n,t)}var o=e("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=h.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();c(y,function(n,t){e[n]||(e[n]=t)}),f("mark",["onload",a()+h.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function o(){"complete"===d.readyState&&i()}function i(){f("mark",["domContent",a()+h.offset],null,"api")}function a(){return E.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-h.offset}var u=(new Date).getTime(),f=e("handle"),c=e(2),s=e("ee"),p=window,d=p.document,l="addEventListener",m="attachEvent",w=p.XMLHttpRequest,g=w&&w.prototype;NREUM.o={ST:setTimeout,SI:p.setImmediate,CT:clearTimeout,XHR:w,REQ:p.Request,EV:p.Event,PR:p.Promise,MO:p.MutationObserver};var v=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1044.min.js"},b=w&&g&&g[l]&&!/CriOS/.test(navigator.userAgent),h=n.exports={offset:u,now:a,origin:v,features:{},xhrWrappable:b};e(1),d[l]?(d[l]("DOMContentLoaded",i,!1),p[l]("load",r,!1)):(d[m]("onreadystatechange",o),p[m]("onload",r)),f("mark",["firstbyte",u],null,"api");var x=0,E=e(4)},{}]},{},["loader"]);</script>
+    <title>West Auckland Academic Mentoring | SEEK Volunteer</title>
+    <meta name="description" content="West Auckland Academic Mentoring on SEEK Volunteer. SEEK Volunteer brings Volunteers &amp; Volunteering Organisations Together">
+    <meta name="keywords" content="SEEK Volunteer">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://seekvolunteer.co.nz/assets/application-e6cadcca631b155c918007cdf31df087.css" media="all" rel="stylesheet" />
+    <link href="https://seekvolunteer.co.nz/assets/print-710786f73630165b18d0c52eb0df2f5a.css" media="print" rel="stylesheet" />
+    <script type="text/javascript" src='//maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="West Auckland Academic Mentoring | SEEK Volunteer">
+    <meta property="og:description" content="West Auckland Academic Mentoring on SEEK Volunteer. SEEK Volunteer brings Volunteers &amp; Volunteering Organisations Together">
+    <meta property="og:url" content="https://seekvolunteer.co.nz/volunteering-organisations/903/west-auckland-academic-mentoring">
+    <meta property="og:type" content="non_profit">
+    <meta property="og:image" content="https://seekvolunteer.co.nz/assets/ico/og-image-200-73fc58847fcf6d64829f529240b89919.png">
+    <meta property="og:site_name" content="SEEK Volunteer">
+
+    <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+    <link rel="apple-touch-icon-precomposed" href="https://seekvolunteer.co.nz/assets/ico/apple-touch-icon-precomposed-2cf7fb49d437c1f4722788d54fad03e4.png">
+
+
+    <!-- For the iPad mini and the first- and second-generation iPad on iOS ≥ 7: -->
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="https://seekvolunteer.co.nz/assets/ico/apple-touch-icon-76-precomposed-075d7fd113d81819ebeb153ce80fb6f7.png">
+
+
+    <!-- For iPhone with high-resolution Retina display running iOS ≥ 7: -->
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="https://seekvolunteer.co.nz/assets/ico/apple-touch-icon-120-precomposed-bd94c4e90c8eabfb6b76ca3d19a7d52c.png">
+
+    <!-- For iPad with high-resolution Retina display running iOS ≥ 7: -->
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://seekvolunteer.co.nz/assets/ico/apple-touch-icon-152-precomposed-27e1b588a16c483f2a1916764af85046.png">
+
+    <!-- Chrome v31+ for Android -->
+    <link rel="icon" sizes="196x196" href="https://seekvolunteer.co.nz/assets/ico/apple-touch-icon-9e4ae86a6fb06d3b3042d4ed4572a9e2.png">
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="https://seekvolunteer.co.nz/assets/ico/favicon-ac51581049c223d041e6662ab6eed991.ico"/>
+
+    <link rel="canonical" href="https://seekvolunteer.co.nz/volunteering-organisations/903/west-auckland-academic-mentoring" />
+
+    <meta content="authenticity_token" name="csrf-param" />
+    <meta content="avA9frKCNzjtP2VGKecoAhGnWLiKyIPTp1yB1GZZIWc=" name="csrf-token" />
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
+    </script>
+    <![endif]-->
+
+
+    <!-- Actual addthis code -->
+    <script type="text/javascript">var switchTo5x = true;</script>
+    <script type="text/javascript" src="//ws.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript">stLight.options({ publisher: "ur-44c74364-5db4-876-106-6028e4847cbf" }); </script>
+
+    <!-- National Volunteer Week -->
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+            n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+            document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+        fbq('init', '258448797852849');
+        fbq('track', "PageView");
+
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+                   src="https://www.facebook.com/tr?id=258448797852849&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Facebook Pixel Code -->
+
+</head>
+<body class=" " data-cookie-domain="seekvolunteer.co.nz">
+<script>
+    dataLayer = [{}];
+</script>
+<!-- Google Tag Manager (DE) -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PJ97CS"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PJ97CS');</script>
+<!-- End Google Tag Manager -->
+
+
+<!-- Google Tag Manager (SEEK) -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MNG264"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MNG264');</script>
+<!-- End Google Tag Manager -->
+
+
+
+<div id="global" class="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+            <div class="btn-group pull-right">
+                <a href="/" class="btn active">NZ</a>
+                <a href="http://volunteer.com.au/" class="btn" title="SEEK AU">AU</a>
+            </div>
+            <ul class="menulist">
+                <li class="state-jobs"><a href="http://www.seek.co.nz" title="SEEK Employment">Jobs</a></li>
+                <li class="state-learning"><a href="http://www.seeklearning.co.nz" title="SEEK Learning">Courses</a></li>
+                <li class="state-commercial"><a href="http://www.seekcommercial.com.au/?site=nz&tracking=sk:main:nz:nav:bus" title="SEEK Business">Businesses for sale</a></li>
+                <li class="active"><a href="/" id="seek-volunteer" title="SEEK Volunteer">Volunteering</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<header class="container" role="banner">
+    <div class="panel-header">
+        <div class="hidden-phone"><a href="/" class="brand" ><img alt="SEEK Volunteer" src="https://seekvolunteer.co.nz/assets/gfx/logo-seek-volunteer-f28d359389ef2ebe2582604996f4dc08.png" /></a>
+        </div>
+        <div class="hidden-desktop">
+            <a href="/" class="brand">
+                <img alt="SEEK Volunteer" src="https://seekvolunteer.co.nz/assets/gfx/logo-seek-volunteer-mobile-0c7765f3ebddd0e1d245f39ecb442513.png" />
+            </a>
+        </div>
+    </div>
+
+    <nav class="navbar ">
+        <div class="navbar-inner">
+
+            <a class="btn btn-navbar navbar-toggle hidden-desktop " data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+
+            <div class="nav-collapse">
+                <ul id="listMenuRoot" class="menulist">
+                    <li class=""> <a href="/volunteering">Opportunities</a> </li>
+                    <li class="active"><a href="/volunteering-organisations" title="Find Organisations">Organisations</a></li>
+                    <li><a href="/events" title="Events">Events</a></li>
+                    <li class="dropdown"><a href="/about-volunteering" title="About Volunteering"><span class="supplemental">About</span> Volunteering</a></li>
+                    <li><a href="/find-volunteers" title="Find Volunteers">Find Volunteers</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+
+</header>
+
+
+<div class="container" role="main">
+
+    <p id="notice"></p>
+
+    <div class="panel organisations details clearfix">
+
+        <div id="vcard" class="flush">
+            <div class="normal-row">
+                <div class="col-sm-3">
+                    <div class=" avatar">
+                        <div><img alt="Waam" src="https://d193gb2w90vjjr.cloudfront.net/organisations/logos/000/000/903/medium/WAAM.png?1484949590" /></div>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <h1>West Auckland Academic Mentoring</h1>
+                    <div class="snapshot">
+                        <p>
+                            <span><i class="icon-location"></i> Auckland</span>
+                            <span><i class="icon-activity"></i> Education</span>
+                            <br>
+                            <span class="muted"><a href="http://waamentoring.weebly.com" target="_blank">waamentoring.weebly.com</a></span>
+                        </p>
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <a href=/volunteering?keyword=West+Auckland+Academic+Mentoring
+                                   class="btn-small btn-primary "><b class="opp-num">2</b> opportunities</a>
+                            </div>
+
+
+                            <div class="btn-group hidden-phone">
+                                <button class="btn-small" id="show_hide">Share this profile</button>
+
+                                <div id="share-panel-popup">
+                                    <div class="share">
+                                        <i class="muted">Share:</i>
+                                        <span class='st_facebook'></span>
+                                        <span class='st_twitter'></span>
+                                        <span class='st_email'></span>
+                                    </div>
+                                    <a class="print" href="javascript:window.print()">Print</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end vcard -->
+
+        <div class="row">
+            <div id="profile" class="col-sm-8">
+                <h2>About West Auckland Academic Mentoring</h2>
+                <div class="row">
+                    <div id="org-desc" class="col-sm-8">
+                        <p><p>West Auckland Academic Mentoring provides free one-on-one academic support for West Auckland secondary school students.</p></p>
+                    </div>
+
+                    <div id="org-supp" class="col-sm-4">
+                        <h3>Contact</h3>
+                        <p>
+                            271 Henderson Valley Road, Henderson<br>
+                            Auckland<br>
+                            612<br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <aside id="profile-sidebar" class="col-sm-4">
+                <h5 class="underline">
+                    <strong>More</strong> in
+                    <a href="/volunteering-organisations?location=Auckland">Auckland</a>
+                </h5>
+                <ul class="unstyled">
+                    <li><a href="/volunteering-organisations/175/auckland-museum">Auckland Museum</a></li>
+                    <li><a href="/volunteering-organisations/413/dog-protection-society">Dog Protection Society</a></li>
+                    <li><a href="/volunteering-organisations/259/volunteer-stroke-scheme">Volunteer Stroke Scheme</a></li>
+                </ul>
+
+                <h5 class="underline">
+                    <strong>More</strong> in
+                    <a href="/volunteering-organisations?cause_ids%5B%5D=education">Education</a>
+                </h5>
+
+                <ul class="unstyled">
+                    <li><a href="/volunteering-organisations/216/the-whitireia-foundation">The Whitireia Foundation</a></li>
+                    <li><a href="/volunteering-organisations/313/new-zealand-maritime-corps">New Zealand Maritime Corps</a></li>
+                    <li><a href="/volunteering-organisations/305/comet-auckland-community-education-trust-auckland-">COMET Auckland (Community Education Trust Auckland)</a></li>
+                </ul>
+            </aside>
+        </div>
+        <!-- <div class="muted localvrc">Local VRC: Kalgoorlie Boulder Volunteer Centre</div>  -->
+    </div>
+
+</div>
+
+
+<footer role="contentinfo" class="site-footer">
+    <div class="container">
+        <div id="sup-nav" class="row">
+            <div class="col-md-5">
+                <h3 class="accordion-header">Find a great opportunity</h3>
+                <div class="row accordion-item">
+                    <div class="col-md-6">
+                        <ul class="unstyled">
+                            <li><a href="/" title="Quick search for Volunteering Opportunities">Quick search</a></li>
+                            <li><a href="/volunteering?suitability_ids%5B%5D=13" title="Volunteer as a group">Great for groups</a></li>
+                            <li><a href="/volunteering?suitability_ids%5B%5D=12" title="Volunteering opportunities suitable for families">Kid friendly</a></li>
+                            <li><a href="/volunteering?suitability_ids%5B%5D=20" title="Volunteering opportunities suitable for ages 14-18">High school aged</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="unstyled">
+                            <li><a href="/volunteering?duration_ids%5B%5D=5" title="Volunteer for once off events">Event volunteering</a></li>
+                            <li><a href="/volunteering?suitability_ids%5B%5D=20" title="Volunteering opportunities suitable for ages 14-18">Student volunteering</a></li>
+                            <li><a href="/volunteering?suitability_ids%5B%5D=13" title="Volunteer as a group">Corporate volunteering</a></li>
+                            <li><a href="/environment-conservation-volunteering" title="Helping the environment">Environmental volunteering</a></li>
+                            <li><a href="/volunteering?suitability_ids%5B%5D=11" title="Emergency Volunteering">Volunteering in an emergency</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--/.row -->
+            </div>
+            <div class="col-md-3">
+                <h3 class="accordion-header">Why &amp; how to volunteer</h3>
+                <ul class="unstyled accordion-item">
+                    <li><a href="/about-volunteering/getting-started" title="Why and how to begin volunteering">Why volunteer?</a></li>
+                    <li><a href="/about-volunteering/volunteering-guidelines">Your rights &amp; responsibilities</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <h3 class="accordion-header">Learn more</h3>
+                <ul class="unstyled accordion-item">
+                    <li><a href="/volunteer-stories" title="Volunteer Stories">Volunteer stories</a></li>
+                    <li><a href="/make-it-count" title="Benefits of volunteering">Benefits of volunteering</a></li>
+                    <li><a href="/volunteering-organisations" title="Volunteering organisations you can help">Organisations doing great things</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <h3 class="accordion-header">Find volunteers</h3>
+                <ul class="unstyled accordion-item">
+                    <li><a href="/find-volunteers" title="Listing your volunteering opportunities online">How it works</a></li>
+                    <li><a href="/find-volunteers" title="Resgister your volunteering organisation">Register now</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--/#sup-nav -->
+        <div id="facebook" style="background:none;">
+            <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fseekvolunteer.co.nz&amp;width&amp;layout=standard&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=35&amp;color_scheme=dark" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:35px;" allowTransparency="true"></iframe>
+        </div>
+        <nav id="site-info">
+            <div class="col-md-6">
+                <a href="/about-volunteering/about-seek-volunteer">About SEEK Volunteer</a> <span class="hidden-phone">| </span>
+                <a href="/admin/opportunities" title="Post an Opportunity">Post an Opportunity</a> <span class="hidden-phone">| </span>
+                <a href="/about-volunteering/about-seek-volunteer">About SEEK</a> <span class="hidden-phone">| </span>
+                <a href="http://www.seek.co.nz/work-for-seek" target="_blank">Work for SEEK</a> <br>
+                <a href="/about-volunteering/contact-us">Contact Us</a> <span class="hidden-phone">| </span>
+                <a href="http://nz.jora.com/j?q=charity+or+%22not+for+profit%22&l=" title="View not for profit jobs on jobseeker.com.au"  target="_blank">Not for Profit Jobs</a> <span class="hidden-phone">| </span>
+            </div>
+            <div class="col-md-6 legal mob-legal">
+                <a href="/legal/terms-of-use">Terms of Use</a> <span class="hidden-phone">| </span>
+                <a href="/legal/privacy-policy">Privacy Statement</a> <span class="hidden-phone">| </span>
+                <a href="http://www.seek.co.nz/safe-job-searching" target="_blank">SEEK Safely</a><br />
+                <a target="_blank" href="http://eduka.com/our-work/" title="Aduka">Designed by Eduka.</a>  Built by <a target="_blank" href="http://deepend.com.au" title="Digital Agency - Deepend">Digital Agency</a>  - Deepend
+                <br>
+                &copy; SEEK 2017. All rights reserved.
+            </div>
+        </nav>
+    </div>
+</footer>
+<script src="https://seekvolunteer.co.nz/assets/application-537604fec0d52edd3ef23164cfbc818e.js"></script>
+<script type="text/javascript">
+
+
+    s.pageName =   'vol:skvnz:volunteers:organisation:details:@organisation.id';
+    s.channel =  'vol:skvnz:volunteers';
+    s.events =   'event59';
+    s.prop1 =  'vol';
+    s.prop2 =  'nz';
+    s.prop3 =  'skvnz';
+    s.prop4 =  'vol:skvnz:volunteers:organisation';
+    s.prop5 =  'vol:skvnz:volunteers:organisation:details';
+    s.prop6 =  'vol:skvnz:volunteers:organisation:details';
+    s.prop7 =  'vol:skvnz:volunteers:organisation:details:@organisation.id';
+    s.prop8 =  'vol:skvnz:volunteers:organisation:details';
+    s.prop23 =   'volunteer.co.nz';
+    s.prop24 =   'D=s_vi';
+    s.prop44 =   'D=g';
+    s.prop70 =   '@organisation.id';
+    s.eVar1 =  'D=c1';
+    s.eVar2 =  'D=c2';
+    s.eVar3 =  'D=c3';
+    s.eVar4 =  'D=c4';
+    s.eVar5 =  'D=c5';
+    s.eVar6 =  'D=c6';
+    s.eVar7 =  'D=c7';
+    s.eVar8 =  'D=c8';
+    s.eVar23 =   'D=c23';
+    s.eVar24 =   'D=s_vi';
+    s.eVar44 =   'D=g';
+    s.eVar70 =   'D=c70';
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)//--></script>
+<script language="JavaScript" type="text/javascript"><!--
+if(navigator.appVersion.indexOf('MSIE')>=0)document.write(unescape('%3C')+'\!-'+'-')
+//--></script><noscript><a href="http://www.omniture.com" title="Web Analytics"><img
+        src="http://info.seek.com.net/b/ss/seekskvauprd/1/H.22.4--NS/0"
+        height="1" width="1" border="0" alt="" /></a></noscript><!--/DO NOT REMOVE/-->
+<!-- End SiteCatalyst code version: H.22.4. -->
+</script>
+
+</body>
+</html>
