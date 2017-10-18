@@ -2,6 +2,7 @@ import os
 
 from scrapy.http import HtmlResponse, Request
 
+
 def fake_response_from_file(file_name, url=None):
     """
     Create a Scrapy fake HTTP response from a HTML file
@@ -23,8 +24,8 @@ def fake_response_from_file(file_name, url=None):
     file_content = open(file_path, 'r').read()
 
     response = HtmlResponse(url=url,
-                        request=request,
-                        body=file_content,
-                        encoding='utf-8')
+                            request=request,
+                            body=file_content,
+                            encoding='utf-8')
     # response.encoding = 'utf-8'
     return response

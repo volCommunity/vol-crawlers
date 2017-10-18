@@ -6,6 +6,7 @@ SITE_NAME = "SEEK Volunteer"
 SITE_URL = "https://seekvolunteer.co.nz/"
 COUNTRY = "NZ"
 
+
 class SeekSpider(scrapy.Spider):
     name = "dummy"
     allowed_domains = ["example.com", "iana.org"]
@@ -51,7 +52,7 @@ class SeekSpider(scrapy.Spider):
         r['url'] = response.xpath('/html/head/meta[contains(@property, "og:url")]/@content').extract_first()
 
         r['description'] = response.xpath('//div[@id="org-desc"]/p/text()').extract_first()
-        r['city'] =response.xpath('//div[@class="snapshot"]/p/span/text()').extract_first()
+        r['city'] = response.xpath('//div[@class="snapshot"]/p/span/text()').extract_first()
 
         # TODO: add tags too!?
 
