@@ -1,0 +1,12 @@
+language: python
+python:
+- 3.6
+- 3.6-dev
+- nightly
+install:
+- pip install pipenv
+- pipenv install --dev
+script:
+- pipenv run flake8
+#- pipenv run coverage run --source=. THE_COMMAND -v 2
+#- coveralls
