@@ -2,6 +2,7 @@ import unittest
 import requests
 from .seek.spiders import seek
 from nz.tests.responses import fake_response_from_file
+import os
 
 class SeekSpiderTest(unittest.TestCase):
 
@@ -23,7 +24,8 @@ class SeekSpiderTest(unittest.TestCase):
 
         # TODO: this will delete and create objects, and should
         # only be run against a test version of Django!
-        self.post_job(item)
+        if os.environ.get('DESTRUCTIVE_TESTS', False):
+            self.post_job(item)
 
 
     def _test_jobs_results(self, results, expected_length):
