@@ -24,7 +24,7 @@ class SeekSpiderTest(unittest.TestCase):
 
         # TODO: this will delete and create objects, and should
         # only be run against a test version of Django!
-        if os.environ.get('DESTRUCTIVE_TESTS', False):
+        if os.environ.get('TESTS_DESTRUCTIVE', False):
             self.post_job(item)
 
 
@@ -66,8 +66,9 @@ class SeekSpiderTest(unittest.TestCase):
 
     def post_job(self, item):
         # TODO: in the future we do need to spin up a version of django...
+        token = os.environ.get('TESTS_TOKEN', False)
         headers = {'Content-Type':'application/json',
-                   'Authorization': 'Token c0fc0ee22c9902ba6b46698aa14efe4f3c7be02b'}
+                   'Authorization': 'Token {}'.format(token)}
         payload = {'title': item['title']}
                    # Test if url or title exist
 
