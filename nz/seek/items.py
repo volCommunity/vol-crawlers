@@ -7,8 +7,26 @@
 
 import scrapy
 
+# TODO: these should be shared across spiders, and consider using Django models
 
-class SeekItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class SeekJobItem(scrapy.Item):
+    title = scrapy.Field()
+    url = scrapy.Field()
+    text = scrapy.Field()
+    labels = scrapy.Field()
+    city = scrapy.Field()
+    sites = scrapy.Field()
+    country = scrapy.Field()
+    organisation = scrapy.Field()
+    organisation_url = scrapy.Field()
+
+class SeekOrganisationItem(scrapy.Item):
+    name = scrapy.Field()
+    url = scrapy.Field()
+    description = scrapy.Field()
+    city = scrapy.Field()
+    country = scrapy.Field()
+
+class SeekSiteItem(scrapy.Item):
+    name = scrapy.Field()
+    url = scrapy.Field()

@@ -63,9 +63,11 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 2
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    'seek.pipelines.NzSeekPipeline': 300,
-# }
+ITEM_PIPELINES = {
+   'seek.pipelines.SeekDuplicatesPipeline': 300,
+   'seek.pipelines.SeekDependeniesPipeline': 350,
+   'seek.pipelines.SeekCreateJobPipeline': 400,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

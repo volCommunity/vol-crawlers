@@ -1,61 +1,66 @@
 import scrapy
+from ..items import SeekJobItem, SeekOrganisationItem
 
-# TODO: import vol model
-# TODO: import these too
 SITE_NAME = "SEEK Volunteer"
 SITE_URL = "https://seekvolunteer.co.nz/"
 COUNTRY = "NZ"
 
-
 class SeekSpider(scrapy.Spider):
-    name = "dummy"
-    allowed_domains = ["example.com", "iana.org"]
+    name = "seekvolunteer.co.nz"
+    allowed_domains = ["seekvolunteer.co.nz"]
     start_urls = (
-        'http://www.example.com/',
+        'https://seekvolunteer.co.nz/volunteering',
     )
 
-    def parse_jobs_page(self, response):
-        # TODO: we should yield, and use models
-        r = {}
-        r['url'] = response.xpath('/html/head/meta[contains(@property, "og:url")]/@content').extract_first()
-        r['urls'] = response.css("#search-result").css("li").css("div.col-md-9 header h2 a::attr(href)").extract()
-        r['next'] = response.css("#search-result").css("nav span.next a::attr(href)").extract()[0]
+    def parse(self, response):
+        """
+        :param response:
+        :return: Scrapy Request generators
+        """
+        job_urls = response.css("#search-result").css("li").css("div.col-md-9 header h2 a::attr(href)").extract()
+        for job_url in job_urls:
+            yield scrapy.Request(response.urljoin(job_url), callback=self.parse_job_page)
 
-        print(r)
-        return [r]
+        next_page_url = response.css("#search-result").css("nav span.next a::attr(href)").extract()[0]
+        if next_page_url is not None:
+            yield scrapy.Request(response.urljoin(next_page_url))
 
     def parse_job_page(self, response):
-        # TODO: don't return, yield, and use item (or model)
-        r = {}
-        r['title'] = response.xpath('/html/head/meta[contains(@property, "og:title")]/@content').extract_first()
-        r['url'] = response.xpath('/html/head/meta[contains(@property, "og:url")]/@content').extract_first()
-        r['text'] = "".join(response.xpath('//div[@id="opp-desc"]/p/text()').extract())
-
-        # Boy this is pure poetry ;(
+        """
+        Parse a job and yield it for a pipeline to create.
+        :param response:
+        :return a SeekJobItem generator:
+        """
         m = response.xpath('//div[@class="infobar snapshot"]/span/text()').extract()
-        r['labels'] = m[0].split(",")
-        r['city'] = m[2]
-        # r['region'] = "foo" # What should this be? Ignore completely? How does it map internationally?
-        r['sites'] = [SITE_NAME]
-        r['country'] = COUNTRY
 
-        r['organisation'] = response.xpath('//p[@class="byline"]/strong/a/text()').extract_first()
-        r['organisation_url'] = response.xpath('//p[@class="byline"]/strong/a/@href').extract_first()
+        job = SeekJobItem(
+            title=response.xpath('/html/head/meta[contains(@property, "og:title")]/@content').extract_first(),
+            url=response.xpath('/html/head/meta[contains(@property, "og:url")]/@content').extract_first(),
+            text="".join(response.xpath('//div[@id="opp-desc"]/p/text()').extract()),
+            labels=m[0].split(","),
+            city=m[2],
+            sites=[SITE_NAME],
+            country=COUNTRY,
+            organisation=response.xpath('//p[@class="byline"]/strong/a/text()').extract_first(),
+            organisation_url=response.xpath('//p[@class="byline"]/strong/a/@href').extract_first(),
+        )
 
-        print(r)
-        return [r]
+        yield job
 
     def parse_org_page(self, response):
-        # TODO: we should yield, and use models
-        r = {}
-        r['name'] = response.xpath('/html/head/meta[contains(@property, "og:title")]/@content').extract_first()
-        r['url'] = response.xpath('/html/head/meta[contains(@property, "og:url")]/@content').extract_first()
+        """
+        Parse an organisation page and return an Organisation item. This will be utilised when creating jobs
+        from a pipeline.
+        :param response:
+        :return SeekOrganisationItem:
+        """
+        org = SeekOrganisationItem(
+            name=response.xpath('/html/head/meta[contains(@property, "og:title")]/@content').extract_first(),
+            url=response.xpath('/html/head/meta[contains(@property, "og:url")]/@content').extract_first(),
+            description=response.xpath('//div[@id="org-desc"]/p/text()').extract_first(),
+            city=response.xpath('//div[@class="snapshot"]/p/span/text()').extract_first(),
+            # TODO: add tags too!?
+            country=COUNTRY,
+        )
 
-        r['description'] = response.xpath('//div[@id="org-desc"]/p/text()').extract_first()
-        r['city'] = response.xpath('//div[@class="snapshot"]/p/span/text()').extract_first()
-
-        # TODO: add tags too!?
-
-        r['country'] = COUNTRY
-        print(r)
-        return r
+        return org
