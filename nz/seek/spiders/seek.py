@@ -1,9 +1,11 @@
 import scrapy
+
 from ..items import SeekJobItem, SeekOrganisationItem
 
 SITE_NAME = "SEEK Volunteer"
 SITE_URL = "https://seekvolunteer.co.nz/"
 COUNTRY = "NZ"
+
 
 class SeekSpider(scrapy.Spider):
     name = "seekvolunteer.co.nz"

@@ -20,6 +20,7 @@ class SeekDuplicatesPipeline(object):
 
         return item
 
+
 class SeekDependeniesPipeline(object):
     def process_item(self, item, spider):
         """
