@@ -142,7 +142,8 @@ class SeekDependenciesPipeline(SeekBasePipeline):
                                   headers=self.headers)
                 j = r.json()
                 if r.status_code != 200:
-                    raise DropItem("Failed to create site. Response code: {} with contents: {}".format(r.status_code, j))
+                    raise DropItem(
+                        "Failed to create site. Response code: {} with contents: {}".format(r.status_code, j))
 
                 tmp.append(j['id'])
 
