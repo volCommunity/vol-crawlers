@@ -136,10 +136,14 @@ class SeekDependenciesPipeline(SeekBasePipeline):
             else:
                 site = SeekSiteItem(name=SITE_NAME,
                                     url=SITE_URL)
+                data = self._item_to_json(site)
                 r = requests.post(urljoin(self.rest_base_url, 'api/sites'),
-                                  json=site,
+                                  json=data,
                                   headers=self.headers)
                 j = r.json()
+                if r.status_code != 200:
+                    raise DropItem("Failed to create site. Response code: {} with contents: {}".format(r.status_code, j))
+
                 tmp.append(j['id'])
 
         item['sites'] = tmp
