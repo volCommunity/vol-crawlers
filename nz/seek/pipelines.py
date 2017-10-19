@@ -60,10 +60,7 @@ class SeekDuplicatesPipeline(SeekBasePipeline):
                          params=payload,
                          headers=self.headers)
         j = r.json()
-
-        print("JSON: {}".format(j))
         if j['count'] != 0:
-            print("Already there, skipping")
             raise DropItem("Job already exists, skipping")
 
         return item
@@ -104,7 +101,6 @@ class SeekDependenciesPipeline(SeekBasePipeline):
                          params={'name': "{} | SEEK Volunteer".format(item['organisation'])},
                          headers=self.headers)
         j = r.json()
-        print("looked for org {} and got: {}".format(item['organisation'], j))
         if j['count'] > 0:
             item['organisation_id'] = j['results'][0]['id']
         else:
