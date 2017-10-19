@@ -16,9 +16,11 @@ class SeekJobItem(scrapy.Item):
     text = scrapy.Field()
     labels = scrapy.Field()
     city = scrapy.Field()
-    sites = scrapy.Field()
+    region = scrapy.Field()
     country = scrapy.Field()
+    sites = scrapy.Field()
     organisation = scrapy.Field()
+    organisation_id = scrapy.Field()
     organisation_url = scrapy.Field()
 
 
@@ -27,6 +29,7 @@ class SeekOrganisationItem(scrapy.Item):
     url = scrapy.Field()
     description = scrapy.Field()
     city = scrapy.Field()
+    region = scrapy.Field()
     country = scrapy.Field()
 
 

@@ -11,6 +11,7 @@ class SeekSpider(scrapy.Spider):
     name = "seekvolunteer.co.nz"
     allowed_domains = ["seekvolunteer.co.nz"]
     start_urls = (
+        # 'https://seekvolunteer.co.nz/volunteering?interest_ids%5b%5d=30',
         'https://seekvolunteer.co.nz/volunteering',
     )
 
@@ -23,7 +24,7 @@ class SeekSpider(scrapy.Spider):
         for job_url in job_urls:
             yield scrapy.Request(response.urljoin(job_url), callback=self.parse_job_page)
 
-        next_page_url = response.css("#search-result").css("nav span.next a::attr(href)").extract()[0]
+        next_page_url = response.css("#search-result").css("nav span.next a::attr(href)").extract_first()
         if next_page_url is not None:
             yield scrapy.Request(response.urljoin(next_page_url))
 
@@ -42,6 +43,7 @@ class SeekSpider(scrapy.Spider):
             labels=m[0].split(","),
             city=m[2],
             sites=[SITE_NAME],
+            region="placeholder",
             country=COUNTRY,
             organisation=response.xpath('//p[@class="byline"]/strong/a/text()').extract_first(),
             organisation_url=response.xpath('//p[@class="byline"]/strong/a/@href').extract_first(),
@@ -61,6 +63,7 @@ class SeekSpider(scrapy.Spider):
             url=response.xpath('/html/head/meta[contains(@property, "og:url")]/@content').extract_first(),
             description=response.xpath('//div[@id="org-desc"]/p/text()').extract_first(),
             city=response.xpath('//div[@class="snapshot"]/p/span/text()').extract_first(),
+            region="placeholder",
             # TODO: add tags too!?
             country=COUNTRY,
         )

@@ -65,7 +65,7 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 2
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'seek.pipelines.SeekDuplicatesPipeline': 300,
-   'seek.pipelines.SeekDependeniesPipeline': 350,
+   'seek.pipelines.SeekDependenciesPipeline': 350,
    'seek.pipelines.SeekCreateJobPipeline': 400,
 }
 

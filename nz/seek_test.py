@@ -45,12 +45,16 @@ class SeekSpiderTest(unittest.TestCase):
         # in a clumsy way.
 
         # Get jobs
-        results = self.spider.parse_jobs_page(fake_response_from_file('nz_seek/volunteering.html'))
+        results = self.spider.parse(fake_response_from_file('nz_seek/volunteering.html'))
         self._test_jobs_results(results, 10)
 
         # Now for each item in results we can go get the job
         # A job page, and as part of it we may have to get the associated org
         # to be able to create it -which would block job creation
+
+        # TODO: This assmes the results are items, but it will be  a generator now that we yield, and (some
+        # of the) items returned will be Requests...
+
         results = self.spider.parse_job_page(
             fake_response_from_file('nz_seek/volunteering_50715_marketing-coordinator.html'))
         self._test_job_results(results, 10)
