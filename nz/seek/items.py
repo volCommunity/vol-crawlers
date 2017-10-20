@@ -8,9 +8,7 @@
 import scrapy
 
 
-# TODO: these should be shared across spiders, and consider using Django models
-
-class SeekJobItem(scrapy.Item):
+class JobItem(scrapy.Item):
     title = scrapy.Field()
     url = scrapy.Field()
     text = scrapy.Field()
@@ -22,9 +20,11 @@ class SeekJobItem(scrapy.Item):
     organisation = scrapy.Field()
     organisation_id = scrapy.Field()
     organisation_url = scrapy.Field()
+    site_name = scrapy.Field()
+    site_url = scrapy.Field()
 
 
-class SeekOrganisationItem(scrapy.Item):
+class OrganisationItem(scrapy.Item):
     name = scrapy.Field()
     url = scrapy.Field()
     description = scrapy.Field()
@@ -33,6 +33,6 @@ class SeekOrganisationItem(scrapy.Item):
     country = scrapy.Field()
 
 
-class SeekSiteItem(scrapy.Item):
+class SiteItem(scrapy.Item):
     name = scrapy.Field()
     url = scrapy.Field()

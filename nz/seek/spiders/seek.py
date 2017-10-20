@@ -1,6 +1,6 @@
 import scrapy
 
-from ..items import SeekJobItem, SeekOrganisationItem
+from ..items import JobItem, OrganisationItem
 
 SITE_NAME = "SEEK Volunteer"
 SITE_URL = "https://seekvolunteer.co.nz/"
@@ -36,7 +36,7 @@ class SeekSpider(scrapy.Spider):
         """
         m = response.xpath('//div[@class="infobar snapshot"]/span/text()').extract()
 
-        job = SeekJobItem(
+        job = JobItem(
             title=response.xpath('/html/head/meta[contains(@property, "og:title")]/@content').extract_first(),
             url=response.xpath('/html/head/meta[contains(@property, "og:url")]/@content').extract_first(),
             text="".join(response.xpath('//div[@id="opp-desc"]/p/text()').extract()),
@@ -58,7 +58,7 @@ class SeekSpider(scrapy.Spider):
         :param response:
         :return SeekOrganisationItem:
         """
-        org = SeekOrganisationItem(
+        org = OrganisationItem(
             name=response.xpath('/html/head/meta[contains(@property, "og:title")]/@content').extract_first(),
             url=response.xpath('/html/head/meta[contains(@property, "og:url")]/@content').extract_first(),
             description=response.xpath('//div[@id="org-desc"]/p/text()').extract_first(),
