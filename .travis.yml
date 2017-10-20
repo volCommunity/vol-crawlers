@@ -10,3 +10,5 @@ script:
 - pipenv run flake8
   #- pipenv run pytest
   #- coveralls
+notifications:
+  irc: "chat.freenode.net#vol.community"
