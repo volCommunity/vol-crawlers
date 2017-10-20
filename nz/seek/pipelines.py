@@ -14,8 +14,7 @@ from scrapy.exceptions import DropItem
 from scrapy.http import HtmlResponse
 from scrapy.utils.serialize import ScrapyJSONEncoder
 
-from .items import SeekSiteItem
-from .spiders.seek import SITE_URL, SITE_NAME
+from .items import SiteItem, OrganisationItem
 
 
 class SeekBasePipeline(object):
@@ -98,12 +97,17 @@ class SeekDependenciesPipeline(SeekBasePipeline):
 
         # Organisation
         r = requests.get(urljoin(self.rest_base_url, 'api/organisations'),
-                         params={'name': "{} | SEEK Volunteer".format(item['organisation'])},
+                         params={'name': item['organisation']},
+                         # What the hell was the reason for this again!?
+                         # params={'name': "{} | SEEK Volunteer".format(item['organisation'])},
                          headers=self.headers)
         j = r.json()
         if j['count'] > 0:
             item['organisation_id'] = j['results'][0]['id']
-        else:
+        elif item['organisation_url'] is not None:
+            # If the organisation is not in our Database, but we have the URL,
+            # get the data and try to create it.
+
             # Warning, hack alert, see https://stackoverflow.com/a/45810801/4372104
             #
             # We should probably parse the organisation page using a proper spider,
@@ -111,7 +115,7 @@ class SeekDependenciesPipeline(SeekBasePipeline):
             # jobs depend on.
             # Hence we get the organisation page using requests, convert it into HtmlResponse
             # so that we are able to call xpath on it, and move on.
-            url = urljoin(SITE_URL, item['organisation_url'])
+            url = urljoin(item['site_url'], item['organisation_url'])
             r = requests.get(url)
             resp = HtmlResponse(body=r.content, url=url)
             org = spider.parse_org_page(resp)
@@ -121,6 +125,35 @@ class SeekDependenciesPipeline(SeekBasePipeline):
                               json=data,
                               headers=self.headers)
             j = r.json()
+
+            if r.status_code != 201:
+                raise DropItem(
+                    "Failed to create site. Response code: {} with contents: {}".format(r.status_code, j))
+
+            item['organisation_id'] = (j['id'])
+        else:
+            # If we know nothing about the organisation, create one using the name
+            # and some silly information, maybe we'll learn more about it during
+            # future crawls.
+            org = OrganisationItem(
+                name=item['organisation'],
+                url="https://en.wikipedia.org/wiki/Bermuda_Triangle",
+                description="We do not known much about this organisation",
+                city="Unknown",
+                region="Unknown",
+                country="Unknown"
+            )
+
+            data = self._item_to_json(org)
+
+            r = requests.post(urljoin(self.rest_base_url, 'api/organisations'),
+                              json=data,
+                              headers=self.headers)
+            j = r.json()
+
+            if r.status_code != 201:
+                raise DropItem(
+                    "Failed to create organisation. Response code: {} with contents: {}".format(r.status_code, j))
 
             item['organisation_id'] = (j['id'])
 
@@ -134,14 +167,14 @@ class SeekDependenciesPipeline(SeekBasePipeline):
             if j['count'] > 0:
                 tmp.append(j['results'][0]['id'])
             else:
-                site = SeekSiteItem(name=SITE_NAME,
-                                    url=SITE_URL)
+                site = SiteItem(name=item['site_name'],
+                                url=item['site_url'])
                 data = self._item_to_json(site)
                 r = requests.post(urljoin(self.rest_base_url, 'api/sites'),
                                   json=data,
                                   headers=self.headers)
                 j = r.json()
-                if r.status_code != 200:
+                if r.status_code != 201:
                     raise DropItem(
                         "Failed to create site. Response code: {} with contents: {}".format(r.status_code, j))
 
