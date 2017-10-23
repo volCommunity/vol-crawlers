@@ -6,7 +6,6 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 import json
-import os
 from urllib.parse import urljoin
 
 import requests
@@ -23,10 +22,7 @@ class SeekBasePipeline(object):
     """
 
     def __init__(self):
-        token = os.environ.get('REST_TOKEN', False)
-        self.headers = {'Content-Type': 'application/json',
-                        'Authorization': 'Token {}'.format(token)}
-        self.rest_base_url = os.environ.get('REST_URL', False)
+        self.headers = {'Content-Type': 'application/json'}
         self._encoder = ScrapyJSONEncoder()
 
     def _item_to_json(self, obj):
@@ -53,9 +49,10 @@ class SeekDuplicatesPipeline(SeekBasePipeline):
         :raise DropItem:
         :return item:
         """
+        self.headers['Authorization'] = 'Token {}'.format(spider.rest_token)
 
         payload = {'title': item['title']}
-        r = requests.get(urljoin(self.rest_base_url, 'api/jobs'),
+        r = requests.get(urljoin(spider.rest_url, 'api/jobs'),
                          params=payload,
                          headers=self.headers)
         j = r.json()
@@ -76,18 +73,19 @@ class SeekDependenciesPipeline(SeekBasePipeline):
         :return item:
         """
 
+        self.headers['Authorization'] = 'Token {}'.format(spider.rest_token)
         # TODO: split items out in different pipelines or methods.
         # Labels
         tmp = []
         for l in item['labels']:
-            r = requests.get(urljoin(self.rest_base_url, 'api/labels'),
+            r = requests.get(urljoin(spider.rest_url, 'api/labels'),
                              params={'name': l},
                              headers=self.headers)
             j = r.json()
             if j['count'] > 0:
                 tmp.append(j['results'][0]['id'])
             else:
-                r = requests.post(urljoin(self.rest_base_url, 'api/labels'),
+                r = requests.post(urljoin(spider.rest_url, 'api/labels'),
                                   json={'name': l},
                                   headers=self.headers)
                 j = r.json()
@@ -96,7 +94,7 @@ class SeekDependenciesPipeline(SeekBasePipeline):
         item['labels'] = tmp
 
         # Organisation
-        r = requests.get(urljoin(self.rest_base_url, 'api/organisations'),
+        r = requests.get(urljoin(spider.rest_url, 'api/organisations'),
                          params={'name': item['organisation']},
                          # What the hell was the reason for this again!?
                          # params={'name': "{} | SEEK Volunteer".format(item['organisation'])},
@@ -121,7 +119,7 @@ class SeekDependenciesPipeline(SeekBasePipeline):
             org = spider.parse_org_page(resp)
 
             data = self._item_to_json(org)
-            r = requests.post(urljoin(self.rest_base_url, 'api/organisations'),
+            r = requests.post(urljoin(spider.rest_url, 'api/organisations'),
                               json=data,
                               headers=self.headers)
             j = r.json()
@@ -146,7 +144,7 @@ class SeekDependenciesPipeline(SeekBasePipeline):
 
             data = self._item_to_json(org)
 
-            r = requests.post(urljoin(self.rest_base_url, 'api/organisations'),
+            r = requests.post(urljoin(spider.rest_url, 'api/organisations'),
                               json=data,
                               headers=self.headers)
             j = r.json()
@@ -160,7 +158,7 @@ class SeekDependenciesPipeline(SeekBasePipeline):
         # Sites
         tmp = []
         for i in item['sites']:
-            r = requests.get(urljoin(self.rest_base_url, 'api/sites'),
+            r = requests.get(urljoin(spider.rest_url, 'api/sites'),
                              params={'name': i},
                              headers=self.headers)
             j = r.json()
@@ -170,7 +168,7 @@ class SeekDependenciesPipeline(SeekBasePipeline):
                 site = SiteItem(name=item['site_name'],
                                 url=item['site_url'])
                 data = self._item_to_json(site)
-                r = requests.post(urljoin(self.rest_base_url, 'api/sites'),
+                r = requests.post(urljoin(spider.rest_url, 'api/sites'),
                                   json=data,
                                   headers=self.headers)
                 j = r.json()
@@ -194,10 +192,10 @@ class SeekCreateJobPipeline(SeekBasePipeline):
         :raise DropItem:
         :return item:
         """
-
+        self.headers['Authorization'] = 'Token {}'.format(spider.rest_token)
         data = self._item_to_json(item)
 
-        r = requests.post(urljoin(self.rest_base_url, 'api/jobs'),
+        r = requests.post(urljoin(spider.rest_url, 'api/jobs'),
                           json=data,
                           headers=self.headers)
 
