@@ -8,18 +8,14 @@ install:
 - pipenv install --dev
 script:
 - pipenv run flake8
-<<<<<<< HEAD
 deploy:
   provider: script
   script: scripts/deploy.sh
   on:
     branch: master
+    python: 3.6
 env:
   global:
     secure: EhfFsjxB7sXhTxLsRLixgFCuoRUieLW7i3I3vrQgkrujArdXmT1OIXBxbT+9H0hRGfMHoeEEbrZWkjOz+zn/0qCRhoWsDRsb/jAoXE7UblIJqNzwdY0F2w6CmujZIMv5ieXdQO/mQKx7i90xhxI9gfnO7mqqZ2qQLqXk9uNb0ZI6oF9IIq4fdY7Cyr6QKG6ShlRXUrwdZ81zvx/cS08SJETqlk3Rrwuahkg+1kEMUFXotL8N2Fuo/SHmyxCL3rGFrMVZmJ4L/W6zpzfTO2fJoxYGC5xLV2s49drrcW6NymgdGwWvTa6L8H3NnuY7ZmrGV9lhn/B+ANum1rP6ITv0DDakYSX/ea3PJjN7jHWUuPJ1/qgP6H4kXOV4RKYM6/a1a14q3CCWDQIhJ3GAe62SXiPu2/FNceEaNgWuwkn/lYY7yxthmHSUBQkpdd225dQa2uODbCNsclKU96tZXp0Htl+rEqlWdHVEVoiqgkMFegjbZW2uFkI8TPneaaFsAVVG47Ps/0I+75ihK64IvcJfPUC5Afbz/cuQ1PTsmRaWxO8OKQqbrrbt1yfEovx4GdT7MCRUhez/YpS4iV5zhTvy/OYRXRJL7HUboA/F2phibejNqR/kEmAfr5q/vUhVCwDs+TWLBKqZKr16aaakxPTdqL/uYhEq4bIn+E6vDzVd9D4=
-=======
-  #- pipenv run pytest
-  #- coveralls
->>>>>>> origin/master
 notifications:
   irc: "chat.freenode.net#vol.community"
