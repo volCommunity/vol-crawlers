@@ -3,4 +3,7 @@ venv
 .env
 .scrapy
 scrapinghub.yml
-Pipfile
+project.egg-info/
+build
+.cache
+setup.py # Generator by shub deploy

@@ -5,7 +5,7 @@ python:
 - nightly
 install:
 - pip install pipenv
-- pipenv install --requirements.txt
+- pipenv install --dev
 script:
 - pipenv run flake8
 deploy:
