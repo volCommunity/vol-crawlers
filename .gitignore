@@ -2,3 +2,5 @@ venv
 *.pyc
 .env
 .scrapy
+scrapinghub.yml
+Pipfile
