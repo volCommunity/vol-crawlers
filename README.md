@@ -12,7 +12,8 @@ How you could help:
 * **Technical:** Help writing new or extending current crawlers 
 
 ## Development
-Crawlers are written in Python3, using Scrapy, and will update using the REST API of https://github.com/volCommunity/vol-django.
+Crawlers are written in Python3, use the Scrapy framework and run from Scrapinghub. They consume the REST API of https://github.com/volCommunity/vol-django
+to update jobs.
 
 Make your life easier by installing the flake8 pre-commit hook, if flake8 fails, so will the Travis build.
 
@@ -42,5 +43,13 @@ Once that is set up, run the scrawler of your choice, you'll need to specify the
 do like so. In this case we spin up the "dogoodjobs.co.nz" crawler:
 
 ```shell
-REST_TOKEN=a7d86fb582d3f61e377d43e4a76996d66e5fecba REST_URL="http://localhost:8000" scrapy crawl dogoodjobs.co.nz
+scrapy crawl dogoodjobs.co.nz -a rest_token=a7d86fb582d3f61e377d43e4a76996d66e5fecba -a rest_url=http://localhost:8000
 ```
+
+#### Scrapinghub
+Spiders will be deployed to scrapinghub by Travis, after a merge to master.
+
+The project lives at https://app.scrapinghub.com/p/247498 raise an issue if you would like access.
+
+Spiders can be controlled via the CLI, after you have gotten access you'l be able to use Shub to control them. See
+the doco for more information on this: https://app.scrapinghub.com/p/247498
