@@ -47,6 +47,8 @@ class SeekSpider(scrapy.Spider):
             country=COUNTRY,
             organisation=response.xpath('//p[@class="byline"]/strong/a/text()').extract_first(),
             organisation_url=response.xpath('//p[@class="byline"]/strong/a/@href').extract_first(),
+            site_name=SITE_NAME,
+            site_url=SITE_URL,
         )
 
         yield job
