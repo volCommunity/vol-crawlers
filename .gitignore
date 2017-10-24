@@ -6,4 +6,4 @@ scrapinghub.yml
 project.egg-info/
 build
 .cache
-setup.py # Generator by shub deploy
+setup.py
