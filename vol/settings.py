@@ -9,10 +9,10 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'seek'
+BOT_NAME = 'vol'
 
-SPIDER_MODULES = ['seek.spiders']
-NEWSPIDER_MODULE = 'seek.spiders'
+SPIDER_MODULES = ['vol.spiders']
+NEWSPIDER_MODULE = 'vol.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'nz_seek (+http://www.yourdomain.com)'
@@ -46,13 +46,13 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 2
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    'seek.middlewares.NzSeekSpiderMiddleware': 543,
+#    'vol.middlewares.NzSeekSpiderMiddleware': 543,
 # }
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 # DOWNLOADER_MIDDLEWARES = {
-#    'seek.middlewares.MyCustomDownloaderMiddleware': 543,
+#    'vol.middlewares.MyCustomDownloaderMiddleware': 543,
 
 
 # Enable or disable extensions
@@ -64,9 +64,9 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 2
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'seek.pipelines.SeekDuplicatesPipeline': 300,
-   'seek.pipelines.SeekDependenciesPipeline': 350,
-   'seek.pipelines.SeekCreateJobPipeline': 400,
+   'vol.pipelines.SeekDuplicatesPipeline': 300,
+   'vol.pipelines.SeekDependenciesPipeline': 350,
+   'vol.pipelines.SeekCreateJobPipeline': 400,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
