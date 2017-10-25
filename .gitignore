@@ -7,3 +7,4 @@ project.egg-info/
 build
 .cache
 setup.py
+requirements.txt
