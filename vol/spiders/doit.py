@@ -15,7 +15,7 @@ class DoItSpider(scrapy.Spider):
     name = "do-it.org"
     allowed_domains = ["api.do-it.org"]
     start_urls = (
-        # Site is heavy JS and uses API anyway; consume it directly
+        # Site is rendered on client site, consume the API directly
         urljoin(API_URL, 'v2/opportunities'),
     )
     # Tell the API to return JSON instead the default (XML)
@@ -50,8 +50,8 @@ class DoItSpider(scrapy.Spider):
         :return a JobItem generator:
         """
 
-        # TODO: handle this more elegantly, see
-        # https://groups.google.com/forum/#!msg/scrapy-users/-v1p5W41VDQ/0W9SIB07iDIJ
+        # Default values should be handled a little better,
+        # see https://github.com/volCommunity/vol-crawlers/issues/24
         city = job['locations'][0]['city']
         if city is None:
             city = "Unknown"
@@ -95,8 +95,8 @@ class DoItSpider(scrapy.Spider):
         json_response = json.loads(response.body_as_unicode())
         r = json_response['data']['recruiter']
 
-        # TODO: handle this more elegantly, see
-        # https://groups.google.com/forum/#!msg/scrapy-users/-v1p5W41VDQ/0W9SIB07iDIJ
+        # Default values should be handled a little better,
+        # see https://github.com/volCommunity/vol-crawlers/issues/24
         if r['city'] is None:
             r['city'] = "Unknown"
 
@@ -104,6 +104,8 @@ class DoItSpider(scrapy.Spider):
         if r['website'] is None:
             r['website'] = urljoin(SITE_URL, "/#/organisations/{}".format(r['id']))
 
+        # Default values should be handled a little better,
+        # see https://github.com/volCommunity/vol-crawlers/issues/24
         if r['blurb'] is None:
             r['blurb'] = "This organisation does not yet have a description."
 
