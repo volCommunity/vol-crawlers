@@ -113,7 +113,13 @@ class DependenciesPipeline(BasePipeline):
             # jobs depend on.
             # Hence we get the organisation page using requests, convert it into HtmlResponse
             # so that we are able to call xpath on it, and move on.
+
             url = urljoin(item['site_url'], item['organisation_url'])
+
+            # If we have an API to talk to, prefer it
+            if item['api_url'] is not None:
+                url = urljoin(item['api_url'], item['organisation_url'])
+
             r = requests.get(url)
             resp = HtmlResponse(body=r.content, url=url)
             org = spider.parse_org_page(resp)

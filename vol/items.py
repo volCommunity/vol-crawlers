@@ -22,6 +22,7 @@ class JobItem(scrapy.Item):
     organisation_url = scrapy.Field()
     site_name = scrapy.Field()
     site_url = scrapy.Field()
+    api_url = scrapy.Field()
 
 
 class OrganisationItem(scrapy.Item):
