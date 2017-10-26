@@ -52,7 +52,11 @@ class DoItSpider(scrapy.Spider):
 
         # Default values should be handled a little better,
         # see https://github.com/volCommunity/vol-crawlers/issues/24
-        city = job['locations'][0]['city']
+        try:
+            city = job['locations'][0]['city']
+        except IndexError:
+            pass
+
         if city is None:
             city = "Unknown"
 
