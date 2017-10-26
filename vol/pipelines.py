@@ -16,7 +16,7 @@ from scrapy.utils.serialize import ScrapyJSONEncoder
 from .items import SiteItem, OrganisationItem
 
 
-class SeekBasePipeline(object):
+class BasePipeline(object):
     """
 
     """
@@ -38,7 +38,7 @@ class SeekBasePipeline(object):
         return json.loads(self._encoder.encode(obj))
 
 
-class SeekDuplicatesPipeline(SeekBasePipeline):
+class DuplicatesPipeline(BasePipeline):
     def process_item(self, item, spider):
         """
         Check if an item  already exists. Raise DropItem if does, which will
@@ -62,7 +62,7 @@ class SeekDuplicatesPipeline(SeekBasePipeline):
         return item
 
 
-class SeekDependenciesPipeline(SeekBasePipeline):
+class DependenciesPipeline(BasePipeline):
     def process_item(self, item, spider):
         """
         Process dependencies of items. At the moment these are a site, labels and organisations.
@@ -113,7 +113,13 @@ class SeekDependenciesPipeline(SeekBasePipeline):
             # jobs depend on.
             # Hence we get the organisation page using requests, convert it into HtmlResponse
             # so that we are able to call xpath on it, and move on.
+
             url = urljoin(item['site_url'], item['organisation_url'])
+
+            # If we have an API to talk to, prefer it
+            if item['api_url'] is not None:
+                url = urljoin(item['api_url'], item['organisation_url'])
+
             r = requests.get(url)
             resp = HtmlResponse(body=r.content, url=url)
             org = spider.parse_org_page(resp)
@@ -183,7 +189,7 @@ class SeekDependenciesPipeline(SeekBasePipeline):
         return item
 
 
-class SeekCreateJobPipeline(SeekBasePipeline):
+class CreateJobPipeline(BasePipeline):
     def process_item(self, item, spider):
         """
         Create a job

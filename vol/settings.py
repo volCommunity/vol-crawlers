@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for nz_seek project
+# Scrapy settings for vol project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -46,7 +46,7 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 2
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    'vol.middlewares.NzSeekSpiderMiddleware': 543,
+#    'vol.middlewares.VolSpiderMiddleware': 543,
 # }
 
 # Enable or disable downloader middlewares
@@ -64,9 +64,9 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 2
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'vol.pipelines.SeekDuplicatesPipeline': 300,
-   'vol.pipelines.SeekDependenciesPipeline': 350,
-   'vol.pipelines.SeekCreateJobPipeline': 400,
+   'vol.pipelines.DuplicatesPipeline': 300,
+   'vol.pipelines.DependenciesPipeline': 350,
+   'vol.pipelines.CreateJobPipeline': 400,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
