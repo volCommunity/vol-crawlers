@@ -34,18 +34,21 @@ class SeekSpider(scrapy.Spider):
         :return a SeekJobItem generator:
         """
 
-        # TODO: implement this
         job = JobItem(
-            title=response.xpath('/html/head/meta[contains(@property, "og:title")]/@content').extract_first(),
-            url=response.xpath('/html/head/meta[contains(@property, "og:url")]/@content').extract_first(),
-            text="\n".join(response.xpath('//div[@id="opp-desc"]/p/text()').extract()),
-            labels="",
-            city="",
+            title=response.xpath(
+                '//article[@class="job-advert with-border"]/header/div[@class="title"]/h1/text()').extract_first(),
+            url=response.url,
+            text="\n".join(
+                response.xpath(
+                    '//article[@class="job-advert with-border"]/div[@class="page-text clear-fix"]/p/text()').extract()),
+            labels=response.xpath('//td/span/a/text()').extract(),
+            # TODO: surely we can do better than this
+            city=response.xpath('//table[@class="list-with-icons"]/tbody/tr/td/text()').extract()[5],
             sites=[SITE_NAME],
             region="placeholder",
             country=COUNTRY,
-            organisation=response.xpath('//p[@class="byline"]/strong/a/text()').extract_first(),
-            organisation_url=response.xpath('//p[@class="byline"]/strong/a/@href').extract_first(),
+            organisation=response.xpath('//p[@class="post-by sub-text"]/a/text()').extract_first(),
+            organisation_url=response.xpath('//p[@class="post-by sub-text"]/a/@href').extract_first(),
             site_name=SITE_NAME,
             site_url=SITE_URL,
         )
@@ -60,12 +63,11 @@ class SeekSpider(scrapy.Spider):
         :return SeekOrganisationItem:
         """
 
-        # TODO: implement this
         org = OrganisationItem(
-            name=response.xpath('/html/head/meta[contains(@property, "og:title")]/@content').extract_first(),
-            url=response.xpath('/html/head/meta[contains(@property, "og:url")]/@content').extract_first(),
-            description=response.xpath('//div[@id="org-desc"]/p/text()').extract_first(),
-            city=response.xpath('//div[@class="snapshot"]/p/span/text()').extract_first(),
+            name=response.xpath('//div[@class="header recruiter-jobs-header"]/h2/span/text()').extract_first(),
+            url=response.url,
+            description="\n".join(response.xpath('//section[@class="profile-info"]/p').extract()),
+            city=response.xpath('//li[@class="location"]/text()').extract_first(),
             region="placeholder",
             # TODO: add tags too!?
             country=COUNTRY,

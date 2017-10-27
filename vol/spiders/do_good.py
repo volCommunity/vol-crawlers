@@ -36,7 +36,7 @@ class DoGoodSpider(scrapy.Spider):
 
         job = JobItem(
             title=response.xpath('/html/head/meta[contains(@property, "og:title")]/@content').extract_first(),
-            url=response.xpath('/html/head/meta[contains(@property, "og:url")]/@content').extract_first(),
+            url=response.url,
             text="\n".join(response.xpath('//div[@class="section_content"]/p/text()').extract()),
 
             # Treat the category as label

@@ -117,8 +117,11 @@ class DependenciesPipeline(BasePipeline):
             url = urljoin(item['site_url'], item['organisation_url'])
 
             # If we have an API to talk to, prefer it
-            if item['api_url'] is not None:
-                url = urljoin(item['api_url'], item['organisation_url'])
+            try:
+                if item['api_url'] is not None:
+                    url = urljoin(item['api_url'], item['organisation_url'])
+            except KeyError:
+                pass
 
             r = requests.get(url)
             resp = HtmlResponse(body=r.content, url=url)
