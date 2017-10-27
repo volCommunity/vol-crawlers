@@ -38,7 +38,7 @@ class SeekSpider(scrapy.Spider):
 
         job = JobItem(
             title=response.xpath('/html/head/meta[contains(@property, "og:title")]/@content').extract_first(),
-            url=response.xpath('/html/head/meta[contains(@property, "og:url")]/@content').extract_first(),
+            url=response.url,
             text="\n".join(response.xpath('//div[@id="opp-desc"]/p/text()').extract()),
             labels=m[0].split(","),
             city=m[2],
@@ -62,7 +62,7 @@ class SeekSpider(scrapy.Spider):
         """
         org = OrganisationItem(
             name=response.xpath('/html/head/meta[contains(@property, "og:title")]/@content').extract_first(),
-            url=response.xpath('/html/head/meta[contains(@property, "og:url")]/@content').extract_first(),
+            url=response.url,
             description=response.xpath('//div[@id="org-desc"]/p/text()').extract_first(),
             city=response.xpath('//div[@class="snapshot"]/p/span/text()').extract_first(),
             region="placeholder",
