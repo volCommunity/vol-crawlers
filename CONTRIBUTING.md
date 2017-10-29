@@ -1,6 +1,6 @@
 # Introduction
 
-Thank you considering contributing to vol.community! It's people like you that can help make this project more awesome
+Thank you for considering contributing to vol.community! It's people like you that can help make this project more awesome
 than we could imagine.
 
 Following these guidelines helps to communicate that you respect the time of the developers managing and developing this open source project.
