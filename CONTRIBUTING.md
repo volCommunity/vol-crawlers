@@ -101,3 +101,30 @@ The project lives at https://app.scrapinghub.com/p/247498 raise an issue if you 
 
 Spiders can be controlled via the CLI, after you have gotten access you'l be able to use Shub to control them. See
 the doco for more information on this: https://app.scrapinghub.com/p/247498
+
+# Adding new countries / spiders
+## Flow
+1. Raise an issue to add support for the country.
+2. Collect sites to collect jobs from.
+3. Write a crawler to scrape the information needed and upload it to [vol.community](vol.community).
+4. Test crawler locally, against a locally running version of [vol.community](vol.community), see the vol-django [CONTRIBUTING](https://github.com/volCommunity/vol-django/blob/master/CONTRIBUTING.md) guide on how to set that up.
+5. Raise Pull Request to get it merged into master.
+6. If no more work is needed it's ready to merge :smiley_cat: This merge to master will deploy your spiders to Scrapinghub.
+7. Spider gets a manual run at Scarpinghub, and will be scheduled if it runs successfully.
+
+## Details
+The pipeline ([pipelines.py](https://github.com/volCommunity/vol-crawlers/blob/master/vol/pipelines.py)) will take 
+care of detecting duplicates, dependencies and uploading of data.
+
+For sites offering an API, the do-it.org ([doit.py](https://github.com/volCommunity/vol-crawlers/blob/master/vol/spiders/doit.py))
+might be a good start. Data is easy to parse as it will all be JSON (or something else that will be easy to traverse). Not all sites advertise or document
+their APIs, however it's often easy enough to see what requests are made using Developer Tools or Firebug.
+
+If the there is no API to talk to, we'll have to parse the HTMl. For this we can use XPath or CSS, and the spider for Charity Job ([charityjob.py](https://github.com/volCommunity/vol-crawlers/blob/master/vol/spiders/charityjob.py]))
+could a good starting point.
+
+We should write some code to generate spiders, see issue [32](https://github.com/volCommunity/vol-crawlers/issues/32).
+Until that work is done, for spiders the only things that currently need doing are:
+* Define the SITE_NAME, SITE_URL and COUNTRY
+* Create a non existent logical class name. Set allowed domains and the start url in the `parse()` function. Define
+xpath queries to scrape the data in `parse_job_page` and `parse_org_page`. 
