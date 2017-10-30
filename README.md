@@ -12,4 +12,4 @@ How you could help:
 * **Non technical:** Add support for new countries by raising an issue to support your country, and include sites that you would like to be included
 * **Technical:** Help writing new or extending current crawlers 
 
-See CONTRIBUTING.md for info on contributing to the vol.community crawlers.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for info on contributing to the vol.community crawlers.
