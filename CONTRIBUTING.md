@@ -50,7 +50,7 @@ Working on your first Pull Request? You can learn how from this *free* series, [
 If you find yourself wishing for a feature that doesn't exist, you are probably not alone. There are bound to be others out there with similar needs.
 Open an issue on our issues list on GitHub which describes the feature you would like to see, why you need it, and how it should work.
 
-# Code comReview Process
+# Code Review Process
 After your Pull Request has been reached anyone is able to suggest changes. Only suggestions by core contributors have to be
 followed but do give any contructive feedback some thought.
 
