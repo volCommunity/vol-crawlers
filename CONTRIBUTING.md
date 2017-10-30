@@ -113,6 +113,7 @@ the doco for more information on this: https://app.scrapinghub.com/p/247498
 7. Spider gets a manual run at Scarpinghub, and will be scheduled if it runs successfully.
 
 ## Details
+## Structure
 The pipeline ([pipelines.py](https://github.com/volCommunity/vol-crawlers/blob/master/vol/pipelines.py)) will take 
 care of detecting duplicates, dependencies and uploading of data.
 
@@ -123,8 +124,13 @@ their APIs, however it's often easy enough to see what requests are made using D
 If the there is no API to talk to, we'll have to parse the HTMl. For this we can use XPath or CSS, and the spider for Charity Job ([charityjob.py](https://github.com/volCommunity/vol-crawlers/blob/master/vol/spiders/charityjob.py]))
 could a good starting point.
 
+## Parsing the data
+To find out how to get the information Scrapy Shell is invaluable, the official tutorial is a good place to start [Scrapy Tutorial](https://doc.scrapy.org/en/latest/intro/tutorial.html)
+
+# Putting it all together
 We should write some code to generate spiders, see issue [32](https://github.com/volCommunity/vol-crawlers/issues/32).
 Until that work is done, for spiders the only things that currently need doing are:
-* Define the SITE_NAME, SITE_URL and COUNTRY
+* Create spider in [spiders](https://github.com/volCommunity/vol-crawlers/blob/master/vol/spiders)
+* Define the `SITE_NAME`, `SITE_UR`L and `COUNTRY` constants.
 * Create a non existent logical class name. Set allowed domains and the start url in the `parse()` function. Define
 xpath queries to scrape the data in `parse_job_page` and `parse_org_page`. 
