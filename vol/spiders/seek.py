@@ -1,3 +1,6 @@
+from urllib.parse import urljoin
+
+import requests
 import scrapy
 
 from ..items import JobItem, OrganisationItem
@@ -15,6 +18,10 @@ class SeekSpider(scrapy.Spider):
         'https://seekvolunteer.co.nz/volunteering',
     )
 
+    def __init__(self, rest_url='', *args, **kwargs):
+        super(SeekSpider, self).__init__(*args, **kwargs)
+        self.rest_url = rest_url
+
     def parse(self, response):
         """
         :param response:
@@ -22,7 +29,13 @@ class SeekSpider(scrapy.Spider):
         """
         job_urls = response.css("#search-result").css("li").css("div.col-md-9 header h2 a::attr(href)").extract()
         for job_url in job_urls:
-            yield scrapy.Request(response.urljoin(job_url), callback=self.parse_job_page)
+            # Until we support updates (https://github.com/volCommunity/vol-crawlers/issues/26)
+            # skip jobs urls for which we already have objects.
+            if requests.get(urljoin(self.rest_url, 'api/jobs'),
+                            params={'url': urljoin(SITE_URL, job_url)}).json()['count'] == 0:
+                yield scrapy.Request(response.urljoin(job_url), callback=self.parse_job_page)
+            else:
+                print("Skipping previously visited job %s" % job_url)
 
         next_page_url = response.css("#search-result").css("nav span.next a::attr(href)").extract_first()
         if next_page_url is not None:

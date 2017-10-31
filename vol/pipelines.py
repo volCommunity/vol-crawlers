@@ -51,13 +51,13 @@ class DuplicatesPipeline(BasePipeline):
         """
         self.headers['Authorization'] = 'Token {}'.format(spider.rest_token)
 
-        payload = {'title': item['title']}
+        payload = {'url': item['url']}
         r = requests.get(urljoin(spider.rest_url, 'api/jobs'),
                          params=payload,
                          headers=self.headers)
         j = r.json()
         if j['count'] != 0:
-            raise DropItem("Job already exists, skipping")
+            raise DropItem("Job with url %s already exists, skipping" % item['url'])
 
         return item
 
@@ -177,6 +177,7 @@ class DependenciesPipeline(BasePipeline):
                 site = SiteItem(name=item['site_name'],
                                 url=item['site_url'])
                 data = self._item_to_json(site)
+
                 r = requests.post(urljoin(spider.rest_url, 'api/sites'),
                                   json=data,
                                   headers=self.headers)
