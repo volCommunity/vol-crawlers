@@ -1,3 +1,6 @@
+from urllib.parse import urljoin
+
+import requests
 import scrapy
 
 from ..items import JobItem
@@ -14,14 +17,24 @@ class DoGoodSpider(scrapy.Spider):
         'https://dogoodjobs.co.nz/volunteer-jobs',
     )
 
+    def __init__(self, rest_url='', *args, **kwargs):
+        super(DoGoodSpider, self).__init__(*args, **kwargs)
+        self.rest_url = rest_url
+
     def parse(self, response):
         """
         :param response:
         :return: Scrapy Request generators
         """
         job_urls = response.css("#content #mainContent ol li a::attr(href)").extract()
+        # Until we support updates (https://github.com/volCommunity/vol-crawlers/issues/26)
+        # skip jobs urls for which we already have objects.
         for job_url in job_urls:
-            yield scrapy.Request(response.urljoin(job_url), callback=self.parse_job_page)
+            if requests.get(urljoin(self.rest_url, 'api/jobs'),
+                            params={'url': job_url}).json()['count'] == 0:
+                yield scrapy.Request(response.urljoin(job_url), callback=self.parse_job_page)
+            else:
+                print("Skipping previously visited job %s" % job_url)
 
         next_page_url = response.css("#content #mainContent a.next::attr(href)").extract_first()
         if next_page_url is not None:

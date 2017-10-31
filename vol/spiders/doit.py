@@ -23,6 +23,10 @@ class DoItSpider(scrapy.Spider):
         'DEFAULT_REQUEST_HEADERS': {'Content-Type': 'application/json'}
     }
 
+    def __init__(self, rest_url='', *args, **kwargs):
+        super(DoItSpider, self).__init__(*args, **kwargs)
+        self.rest_url = rest_url
+
     def parse(self, response):
         """
         Example https://api.do-it.org/v2/opportunities
