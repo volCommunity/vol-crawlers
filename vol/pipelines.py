@@ -13,8 +13,6 @@ from scrapy.exceptions import DropItem
 from scrapy.http import HtmlResponse
 from scrapy.utils.serialize import ScrapyJSONEncoder
 
-from .items import SiteItem, OrganisationItem
-
 
 class BasePipeline(object):
     """
@@ -74,26 +72,10 @@ class DependenciesPipeline(BasePipeline):
         """
 
         self.headers['Authorization'] = 'Token {}'.format(spider.rest_token)
-        # TODO: split items out in different pipelines or methods.
-        # Labels
-        tmp = []
-        for l in item['labels']:
-            r = requests.get(urljoin(spider.rest_url, 'api/labels'),
-                             params={'name': l},
-                             headers=self.headers)
-            j = r.json()
-            if j['count'] > 0:
-                tmp.append(j['results'][0]['id'])
-            else:
-                r = requests.post(urljoin(spider.rest_url, 'api/labels'),
-                                  json={'name': l},
-                                  headers=self.headers)
-                j = r.json()
-                tmp.append(j['id'])
-
-        item['labels'] = tmp
-
         # Organisation
+
+        # Does it exist? If so, skip parsing the org page and store our ID, assuming our API will be faster
+        # than the target site.
         r = requests.get(urljoin(spider.rest_url, 'api/organisations'),
                          params={'name': item['organisation']},
                          # What the hell was the reason for this again!?
@@ -101,11 +83,15 @@ class DependenciesPipeline(BasePipeline):
                          headers=self.headers)
         j = r.json()
         if j['count'] > 0:
+            # Done
             item['organisation_id'] = j['results'][0]['id']
-        elif item['organisation_url'] is not None:
-            # If the organisation is not in our Database, but we have the URL,
-            # get the data and try to create it.
+            return item
 
+        if item['organisation_url'] is not None:
+            # If org was not created yet, parse the page, populate item and let job creation do the
+            # work in one swoop
+            #
+            #
             # Warning, hack alert, see https://stackoverflow.com/a/45810801/4372104
             #
             # We should probably parse the organisation page using a proper spider,
@@ -117,78 +103,15 @@ class DependenciesPipeline(BasePipeline):
             url = urljoin(item['site_url'], item['organisation_url'])
 
             # If we have an API to talk to, prefer it
-            try:
-                if item['api_url'] is not None:
-                    url = urljoin(item['api_url'], item['organisation_url'])
-            except KeyError:
-                pass
+
+            if 'api_url' in item and item['api_url'] is not None:
+                url = urljoin(item['api_url'], item['organisation_url'])
 
             r = requests.get(url)
             resp = HtmlResponse(body=r.content, url=url)
             org = spider.parse_org_page(resp)
 
-            data = self._item_to_json(org)
-            r = requests.post(urljoin(spider.rest_url, 'api/organisations'),
-                              json=data,
-                              headers=self.headers)
-            j = r.json()
-
-            if r.status_code != 201:
-                raise DropItem(
-                    "Failed to create site. Response code: {} with contents: {}".format(r.status_code, j))
-
-            item['organisation_id'] = (j['id'])
-        else:
-            # If we know nothing about the organisation, create one using the name
-            # and some silly information, maybe we'll learn more about it during
-            # future crawls.
-            org = OrganisationItem(
-                name=item['organisation'],
-                url="https://en.wikipedia.org/wiki/Bermuda_Triangle",
-                description="We do not known much about this organisation",
-                city="Unknown",
-                region="Unknown",
-                country="Unknown"
-            )
-
-            data = self._item_to_json(org)
-
-            r = requests.post(urljoin(spider.rest_url, 'api/organisations'),
-                              json=data,
-                              headers=self.headers)
-            j = r.json()
-
-            if r.status_code != 201:
-                raise DropItem(
-                    "Failed to create organisation. Response code: {} with contents: {}".format(r.status_code, j))
-
-            item['organisation_id'] = (j['id'])
-
-        # Sites
-        tmp = []
-        for i in item['sites']:
-            r = requests.get(urljoin(spider.rest_url, 'api/sites'),
-                             params={'name': i},
-                             headers=self.headers)
-            j = r.json()
-            if j['count'] > 0:
-                tmp.append(j['results'][0]['id'])
-            else:
-                site = SiteItem(name=item['site_name'],
-                                url=item['site_url'])
-                data = self._item_to_json(site)
-
-                r = requests.post(urljoin(spider.rest_url, 'api/sites'),
-                                  json=data,
-                                  headers=self.headers)
-                j = r.json()
-                if r.status_code != 201:
-                    raise DropItem(
-                        "Failed to create site. Response code: {} with contents: {}".format(r.status_code, j))
-
-                tmp.append(j['id'])
-
-        item['sites'] = tmp
+            item['organisation'] = self._item_to_json(org)
 
         return item
 
@@ -202,8 +125,14 @@ class CreateJobPipeline(BasePipeline):
         :raise DropItem:
         :return item:
         """
+        item['labels'] = [{"name": label} for label in item['labels']]
+        item['sites'] = [{"name": item['site_name'], "url": item['site_url']}]
+
+        print("going to create item: %s" % item)
         self.headers['Authorization'] = 'Token {}'.format(spider.rest_token)
         data = self._item_to_json(item)
+
+        print("going to create item: %s" % data)
 
         r = requests.post(urljoin(spider.rest_url, 'api/jobs'),
                           json=data,
