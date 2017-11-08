@@ -84,7 +84,7 @@ class DependenciesPipeline(BasePipeline):
         j = r.json()
         if j['count'] > 0:
             # Done
-            item['organisation_id'] = j['results'][0]['id']
+            item['organisation'] = j['results'][0]
             return item
 
         if item['organisation_url'] is not None:
@@ -102,8 +102,7 @@ class DependenciesPipeline(BasePipeline):
 
             url = urljoin(item['site_url'], item['organisation_url'])
 
-            # If we have an API to talk to, prefer it
-
+            # If we have an API to talk to, use it
             if 'api_url' in item and item['api_url'] is not None:
                 url = urljoin(item['api_url'], item['organisation_url'])
 
