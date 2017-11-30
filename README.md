@@ -4,6 +4,9 @@
 [![IRC Channel](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](https://kiwiirc.com/client/irc.freenode.net/#vol.community)
 
 # Vol::crawlers
+
+_**We've merged with [Collaborate](https://letscollaborate.co.nz), part of the codebase will be merged but this code is currently no longer under development nor maintained.**_
+
 Welcome! This project is in very early and experimental stage, and help in the following areas would be greatly appreciated!
  
 This repository contains the crawlers used to find volunteering gigs.
